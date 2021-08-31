@@ -12,6 +12,8 @@
 #include <common/utils/resources.h>
 #include <common/utils/process_path.h>
 
+#include <PowerRenameUIHost/PowerRenameUIHost.h>
+
 extern HINSTANCE g_hInst;
 
 struct InvokeStruct
@@ -138,6 +140,14 @@ HRESULT CPowerRenameMenu::InvokeCommand(_In_ LPCMINVOKECOMMANDINFO pici)
                     pInvokeData->pstrm->Release(); // if we failed to create the thread, then we must release the stream
                 }
             }
+                winrt::init_apartment(winrt::apartment_type::single_threaded);
+            
+                winrt::PowerRenameUI_new::App app;
+            
+                const auto result = AppWindow::Show(g_hInst, SW_SHOWNORMAL);
+            
+                app.Close();
+            
 
             if (FAILED(hr))
             {
